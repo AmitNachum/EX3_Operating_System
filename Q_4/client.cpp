@@ -5,6 +5,8 @@
 #include <netinet/in.h>    
 #include <arpa/inet.h>     
 #include <netdb.h>
+#include <chrono>
+#include <thread>
 #define PORT "9034"
 
 
@@ -38,6 +40,7 @@ if(connect(client_fd,res->ai_addr,res->ai_addrlen)){
 freeaddrinfo(res);
 
 while (true) {
+    std::this_thread::sleep_for(std::chrono::microseconds(10000));
     char buffer[1024];
     ssize_t receive = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
     

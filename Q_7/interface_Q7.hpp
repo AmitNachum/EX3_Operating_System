@@ -99,7 +99,7 @@ void handle_client(int fd) {
                 std::string msg = "Convex Hull has been initialized with " + std::to_string(n_points) + " points.\n";
                 send(fd, msg.c_str(), msg.size(), 0);
                 initialized_map[fd] = true;
-                send_menu(fd);
+                
             } else {
                 std::string msg = "Graph already initialized by another client.\n";
                 send(fd, msg.c_str(), msg.size(), 0);
@@ -110,6 +110,7 @@ void handle_client(int fd) {
             ssize_t bytes = send(fd, err.c_str(), err.size(), 0);
             if (bytes == -1) perror("menu");
         }
+        send_menu(fd);
         continue;
     }
 
@@ -139,7 +140,6 @@ void handle_client(int fd) {
             std::string msg = "CH Area: " + std::to_string(area) + "\n";
             send(fd, msg.c_str(), msg.size(), 0);
         }
-        send_menu(fd);
     } else if (input.find(',') != std::string::npos) {
         size_t comma = input.find(',');
         try {
@@ -176,7 +176,6 @@ void handle_client(int fd) {
     } else {
         std::string err = "Invalid option. Try 1, 2, 3, or 4.\n";
         send(fd, err.c_str(), err.size(), 0);
-        send_menu(fd);
     }
 }
 }
