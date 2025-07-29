@@ -25,12 +25,14 @@ std::mutex ch_mutex;
 std::vector<Point*> ch_points;
 size_t n_points;
 
+
 using std::cout;
 using std::cin;
 using std::endl;
 using std::cerr;
 std::unordered_map<int, bool> initialized_map;
 std::unordered_map<int, std::string> last_command_map;
+
 
 
 
@@ -53,6 +55,12 @@ int main() {
         perror("socket");
         exit(EXIT_FAILURE);
     }
+    int yes = 1;
+    if (setsockopt(server_fd,SOL_SOCKET,SO_REUSEADDR,&yes, sizeof(yes)) < 0) {
+        perror("setsockopt(SO_REUSEADDR)");
+        exit(1);
+    }
+
 
     if (bind(server_fd, res->ai_addr, res->ai_addrlen) == -1) {
         perror("bind");

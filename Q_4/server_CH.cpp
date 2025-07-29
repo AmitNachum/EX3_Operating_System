@@ -61,6 +61,12 @@ int main() {
         perror("socket");
         exit(EXIT_FAILURE);
     }
+    
+    int yes = 1;
+    if (setsockopt(server_fd,SOL_SOCKET,SO_REUSEADDR,&yes, sizeof(yes)) < 0) {
+        perror("setsockopt(SO_REUSEADDR)");
+        exit(1);
+    }
 
     if (bind(server_fd, res->ai_addr, res->ai_addrlen) == -1) {
         perror("bind");

@@ -28,6 +28,8 @@ extern std::mutex ch_mutex;
 extern std::vector<Point*> ch_points;
 extern size_t n_points;
 extern size_t thread_count;
+static bool init_flag = false;
+
 
 using std::cout;
 using std::cin;
@@ -93,16 +95,19 @@ void handle_client(int fd) {
         if (std::all_of(input.begin(), input.end(), ::isdigit)) {
             std::lock_guard<std::mutex> lock(ch_mutex);
             
-            if (ch_points.empty()) {  // Only initialize if no one else has done it
+            if (ch_points.empty() && !init_flag) {  // Only initialize if no one else has done it
                 n_points = std::stoul(input);
                 ch_points.reserve(n_points);
                 std::string msg = "Convex Hull has been initialized with " + std::to_string(n_points) + " points.\n";
                 send(fd, msg.c_str(), msg.size(), 0);
                 initialized_map[fd] = true;
+                init_flag = true;
+                
                 
             } else {
                 std::string msg = "Graph already initialized by another client.\n";
                 send(fd, msg.c_str(), msg.size(), 0);
+                initialized_map[fd] = true;
             }
 
         } else {
@@ -140,6 +145,7 @@ void handle_client(int fd) {
             std::string msg = "CH Area: " + std::to_string(area) + "\n";
             send(fd, msg.c_str(), msg.size(), 0);
         }
+        send_menu(fd);
     } else if (input.find(',') != std::string::npos) {
         size_t comma = input.find(',');
         try {
@@ -171,11 +177,13 @@ void handle_client(int fd) {
         } catch (...) {
             std::string err = "Invalid format. Use x,y (like 3.5,2.1)\n";
             send(fd, err.c_str(), err.size(), 0);
+            
         }
         send_menu(fd);
     } else {
         std::string err = "Invalid option. Try 1, 2, 3, or 4.\n";
         send(fd, err.c_str(), err.size(), 0);
+        send_menu(fd);
     }
 }
 }

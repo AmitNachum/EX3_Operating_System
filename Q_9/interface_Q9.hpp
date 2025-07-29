@@ -112,6 +112,7 @@ void* handle_client(int fd) {
             } else {
                 std::string err = "Invalid number. Please enter a number like 5:\n";
                 send(fd, err.c_str(), err.size(), 0);
+                send_menu(fd);
             }
             send_menu(fd);
             continue;
@@ -146,6 +147,7 @@ void* handle_client(int fd) {
                 msg = "CH Area: " + std::to_string(area) + "\n";
             }
             send(fd, msg.c_str(), msg.size(), 0);
+            send_menu(fd);
 
         } else if (input.find(',') != std::string::npos) {
             size_t comma = input.find(',');
@@ -182,7 +184,7 @@ void* handle_client(int fd) {
         } else {
             std::string err = "Invalid option. Try 1, 2, 3, or 4.\n";
             send(fd, err.c_str(), err.size(), 0);
-            
+            send_menu(fd);
         }
         
     }

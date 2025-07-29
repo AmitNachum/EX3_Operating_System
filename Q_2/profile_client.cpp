@@ -51,13 +51,13 @@ int main(){
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "CH's Area Vector: " << calculate_area(con_hull_vec) << endl; 
     auto t2 = std::chrono::high_resolution_clock::now();
-    cout << "Vector time: " << std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() << " µs" << endl;
+    cout << "Vector time: " << std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() << " ms" << endl<<endl;
     delete_pointers(con_hull_vec);
     
     auto t3 = std::chrono::high_resolution_clock::now();
     cout << "CH's Area Deque: " << calculate_area(con_hull_deque) << endl;
     auto t4 = std::chrono::high_resolution_clock::now();
-    cout << "Deque time: " << std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count() << " µs" << endl;
+    cout << "Deque time: " << std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count() << " ms" << endl;
     delete_deque(con_hull_deque); 
 
     return 0;

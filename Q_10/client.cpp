@@ -47,8 +47,7 @@ while (true) {
         buffer[receive] = '\0';
         std::cout << buffer <<std::endl << std::flush;
 
-        // Prompt user to respond
-        std::cout << "[REACHED MENU]" << std::endl;
+       
         std::string input;
         std::getline(std::cin, input);
         input += '\n';  // Ensure newline as server expects it
