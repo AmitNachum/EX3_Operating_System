@@ -46,7 +46,7 @@ bool prev_state = area_over_100;
     std::unique_lock<std::mutex> lock(ch_mutex);
     
     while(true){
-        cv.wait(lock, [&](){return area_over_100 != prev_state;});
+        cv.wait(lock, [=](){return area_over_100 != prev_state;});
 
         if(area_over_100){
             std::cout << "At least 100 units belongs to CH" << std::endl;

@@ -33,7 +33,8 @@ void delete_deque(std::deque<Point*>& dq) {
 }
 
 int main(){
-    cout << "==== Convex Hull ====" << endl << endl;
+    cout << "==== Convex Hull ====" << endl;
+    cout <<"Generating,please wait..."<<endl<<endl;
 
     std::vector<Point *> con_hull_vec;
     std::deque<Point *> con_hull_deque;

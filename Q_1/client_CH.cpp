@@ -1,5 +1,4 @@
 #include "point.hpp"
-#include <iostream>
 
 using std::cout;
 using std::cin;
@@ -26,12 +25,23 @@ int main(){
     std::vector<Point *> convex_hull_points;
     int i = 0;
     cout<<"Enter 4 points for the convex hall:"<< endl;
+    std::string line;
 
     while( i < NUM_POINTS){
-        cout << "Point number " << i + 1 <<":" <<endl;
-        float x;
-        float y;
-        cin >> x >> y;
+        cout << "Point number " << i + 1 <<"(format: x y)" <<endl;
+
+        std::getline(std::cin, line);
+        if(line.empty()){--i; continue;}
+
+        std::istringstream iss(line);
+        float x,y;
+
+        if(!(iss >> x >> y)){
+            std::cout <<"Invalid format. Please enter two numbers."<< endl;
+            --i;
+            continue;
+        }
+
         pair<float,float> x_y = {x,y};
         Point *point = new Point(x_y);
         convex_hull_points.emplace_back(point);
